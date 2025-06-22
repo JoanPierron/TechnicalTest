@@ -1,0 +1,41 @@
+.liste {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.telephone-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.telephone-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.telephone-info {
+  margin-right: 10px;
+}
+
+.btn {
+  background-color: #eee;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}

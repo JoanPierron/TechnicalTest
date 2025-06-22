@@ -1,35 +1,120 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import './ajouter.css'
 
-export default async function AddPage() {
+export default function AddPage() {
+  const [formData, setFormData] = useState({
+    marque: '',
+    imei: '',
+    nom: '',
+    couleur: 'Rouge',
+    capacite: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const data = {
+      ...formData,
+      capacite: Number(formData.capacite),
+    }
+
+    try {
+      const res = await fetch('/api/telephones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const result = await res.json()
+
+      if (result.success) {
+        alert('Téléphone ajouté avec succès !')
+        setFormData({
+          marque: '',
+          imei: '',
+          nom: '',
+          couleur: 'Rouge',
+          capacite: '',
+        })
+      } else {
+        alert('Erreur : ' + result.error)
+      }
+    } catch (err) {
+      console.error(err)
+      alert("Erreur lors de l'envoi.")
+    }
+  }
 
   return (
     <div className="ajouter">
       <h2>Formulaire de création de téléphone</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="marqueTel">Marque :</label>
-          <input type="text" id="marqueTel" name="marqueTel" required />
+          <label htmlFor="marque">Marque :</label>
+          <input
+            type="text"
+            id="marque"
+            name="marque"
+            value={formData.marque}
+            onChange={handleChange}
+            required
+          />
         </div>
+
         <div className="form-group">
-          <label htmlFor="codeIMEI">Code IMEI :</label>
-          <input type="text" id="codeIMEI" name="codeIMEI" required />
+          <label htmlFor="imei">Code IMEI :</label>
+          <input
+            type="text"
+            id="imei"
+            name="imei"
+            value={formData.imei}
+            onChange={handleChange}
+            required
+          />
         </div>
+
         <div className="form-group">
-          <label htmlFor="nomTel">Nom</label>
-          <input type="text" id="nomTel" name="nomTel" required />
+          <label htmlFor="nom">Nom :</label>
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            value={formData.nom}
+            onChange={handleChange}
+            required
+          />
         </div>
+
         <div className="form-group">
-          <label htmlFor="nomTel">Couleur</label>
-          <select id="couleurTel" name="couleurTel" required>
-            <option value="rouge">Rouge</option>
-            <option value="vert">Vert</option>
-            <option value="bleu">Bleu</option>
+          <label htmlFor="couleur">Couleur :</label>
+          <select
+            id="couleur"
+            name="couleur"
+            value={formData.couleur}
+            onChange={handleChange}
+            required
+          >
+            <option value="Rouge">Rouge</option>
+            <option value="Vert">Vert</option>
+            <option value="Bleu">Bleu</option>
           </select>
         </div>
+
         <div className="form-group">
-          <label htmlFor="capaciteTel">Capacite</label>
-          <input type="text" id="capaciteTel" name="capaciteTel" required />
+          <label htmlFor="capacite">Capacité :</label>
+          <input
+            type="number"
+            id="capacite"
+            name="capacite"
+            value={formData.capacite}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <button type="submit">Créer le téléphone</button>
