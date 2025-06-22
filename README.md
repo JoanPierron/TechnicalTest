@@ -16,8 +16,8 @@ Avant de commencer, assurez-vous d’avoir installé sur votre machine :
 
 ### 1. Cloner le projet
 
-git clone <url-du-repo>
-cd <nom-du-dossier>
+git clone "url-du-repo"
+cd "nom-du-dossier"
 
 ### 2. Installer et lancer MongoDB
 
@@ -37,7 +37,7 @@ docker run -d \
 ### 3. Lancement de l'application et installation Payload CMS
 
 1. Placez-vous dans le dossier de l'application :
-cd <manage-tel-back>
+cd "manage-tel-back"
 
 2. Installez les dépendances :
 npm install
